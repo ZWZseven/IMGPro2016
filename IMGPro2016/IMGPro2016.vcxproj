@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2820DCA2-F907-4A43-9316-07BB20C298CA}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>IMGPro2016</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\vtk-5.10.1\VTK5.10Installed\include\vtk-5.10;D:\FLTK1.3.2\fltk1.3.2install\include\FL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\vtk-5.10.1\VTK5.10Installed\lib\vtk-5.10;D:\FLTK1.3.2\fltk1.3.2install\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;D:\FLTK1.3.2\fltk1.3.2install\lib\fltkimagesd.lib;D:\FLTK1.3.2\fltk1.3.2install\lib\fltkformsd.lib;D:\FLTK1.3.2\fltk1.3.2install\lib\fltkgld.lib;opengl32.lib;D:\FLTK1.3.2\fltk1.3.2install\lib\fltkd.lib;wsock32.lib;comctl32.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkCharts.lib;vtkGenericfiltering.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkGeovis.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkproj4.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtksqlite.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkViews.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkInfovis.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkalglib.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtklibxml2.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkWidgets.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkHybrid.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkParallel.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkVolumeRendering.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkRendering.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkGraphics.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkverdict.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkImaging.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkIO.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkDICOMParser.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkFiltering.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkCommon.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkmetaio.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkpng.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtktiff.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkjpeg.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkNetCDF.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkhdf5_hl.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkhdf5.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtkzlib.lib;D:\vtk-5.10.1\VTK5.10BIN\bin\Debug\vtksys.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="IMGProWenzhao.cpp" />
+    <ClCompile Include="usrInterface.cpp" />
+    <ClCompile Include="vtkFlRenderWindowInteractor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="usrInterface.h" />
+    <ClInclude Include="vtkFlRenderWindowInteractor.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
