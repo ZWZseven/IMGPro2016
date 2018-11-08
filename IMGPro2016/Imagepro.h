@@ -6,7 +6,7 @@
 #include "vtkRenderWindowInteractor.h"
 #include "vtkPolyDataMapper.h"
 #include "vtkSmoothPolyDataFilter.h"
-#include "vtkDecimatePro.h"     //消减率控制加速
+#include "vtkDecimatePro.h"     //
 #include "vtkImageReslice.h"
 #include "vtkImageFlip.h"
 #include "vtkPropPicker.h"
@@ -19,10 +19,10 @@
 #include <list>
 #include <Windows.h>
 
-// ====================  命名空间  ====================
+// ====================  namespace  ====================
 using namespace std;
 
-// ====================  结构体  ====================
+// ====================  structure  ====================
 struct DOUBLE_POINT_3D
 {
 	double x;
@@ -30,7 +30,7 @@ struct DOUBLE_POINT_3D
 	double z;
 };
 
-// ====================  类  ====================
+// ====================  classes  ====================
 class vtkImageData;
 class vtkImageDICOMReader;
 class vtkImageReader;
