@@ -75,8 +75,8 @@ unsigned char threshold=100;
 Fl_Window *Win;	
 //Fl_JPEG_Image* jpg;
 Fl_Scroll* scroll;
-// 显示窗口
-Fl_Scrollbar *SliceSlider;	// 片层滚动条
+// 
+Fl_Scrollbar *SliceSlider;	// 
 
 //float** imagemat;
 
@@ -170,8 +170,8 @@ void m_CancelButton(Fl_Button*, void*)
 	
 	Win->hide();
 }
-int ScreenWidth = GetSystemMetrics(SM_CXFULLSCREEN);	// 屏幕显示窗口宽度
-int ScreenHeight = GetSystemMetrics(SM_CYFULLSCREEN);	// 屏幕显示窗口高度
+int ScreenWidth = GetSystemMetrics(SM_CXFULLSCREEN);	// Screen width
+int ScreenHeight = GetSystemMetrics(SM_CYFULLSCREEN);	// Screen height
 void save_cb(Fl_Widget*, void*) 
 {	Win = new Fl_Window((ScreenWidth-400)/2, (ScreenHeight-190)/2, 400, 190,"Save");
 
@@ -2296,259 +2296,7 @@ for(int i=0;i<dims[0]+2*c;i++)
   SliceWin[3]->Render();
 
 }
-//==========================================================================================================
-//void do_gdilate(int* input,int* output,int gt[][3],int ox,int oy,int size)
-//{
-//	int a=0; int b1=0;int c1=0;
-//	int d1=0;int e1=0;int f1=0;
-//	int g1=0;int h1=0;int i1=0;
-//	if(size==2)
-//	{
-//		int* in=new int [(dims[0]+1*2)*(dims[1]+1*2)];
-//				
-//		for(int i=0;i<dims[0]+1*2;i++)
-//		{
-//			for(int j=0;j<dims[1]+1*2;j++)
-//			{
-//				in[i*(dims[1]+1*2)+j]=0;
-//			}
-//		}
-//
-//		for(int i=1;i<dims[0]+1;i++)
-//		{
-//			for(int j=1;j<dims[1]+1;j++)
-//			{
-//				in[i*(dims[1]+1*2)+j]=input[(i-1)*(dims[1])+j-1];
-//			}
-//		}
-//		
-//		
-//		for(int i=0;i<dims[0]+1*2;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+1*2;j++)
-//					{
-//						 /*a=gt[0][0]+in[(i+0-ox)*(dims[1]+1*2)+j+0-oy];
-//						 b1=gt[0][1]+in[(i+0-ox)*(dims[1]+1*2)+j+1-oy];
-//						 c1=gt[1][0]+in[(i+1-ox)*(dims[1]+1*2)+j+0-oy];
-//						 d1=gt[1][1]+in[(i+1-ox)*(dims[1]+1*2)+j+1-oy];*/
-//						//if()break;
-//						
-//
-//
-//						 if(((i+0-ox)<1)||((i+0-ox)>(dims[0]+1*1))||((j+0-oy)<1)||((j+0-oy)>(dims[1]+1*1)))
-//						{
-//							 a=gt[0][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            a=gt[0][0]+in[(i+0-ox)*(dims[1]+1*2)+j+0-oy];
-//						}
-//						 if(((i+0-ox)<1)||((i+0-ox)>(dims[0]+1*1))||((j+1-oy)<1)||((j+1-oy)>(dims[1]+1*1)))
-//						{
-//							 b1= gt[0][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            b1=gt[0][1]+in[(i+0-ox)*(dims[1]+1*2)+j+1-oy];
-//						}
-//						  if(((i+1-ox)<1)||((i+1-ox)>(dims[0]+1*1))||((j+0-oy)<1)||((j+0-oy)>(dims[1]+1*1)))
-//						{
-//							 c1= gt[1][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            c1=gt[1][0]+in[(i+1-ox)*(dims[1]+1*2)+j+0-oy];
-//						}
-//						  if(((i+1-ox)<1)||((i+1-ox)>(dims[0]+1*1))||((j+1-oy)<1)||((j+1-oy)>(dims[1]+1*1)))
-//						{
-//							 d1=gt[1][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            d1=gt[1][1]+in[(i+1-ox)*(dims[1]+1*2)+j+1-oy];
-//						}
-//						if(!((a==gt[0][0])&& (b1== gt[0][1])&&(c1== gt[1][0])&&(d1==gt[1][1])))
-//						{
-//							 if(a<b1)a=b1;
-//							 if(a<c1)a=c1;
-//							 if(a<d1)a=d1;
-//							 if(a>255)a=255;
-//							//output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=a;
-//							 output[(i+0)*(dims[1]+1*2)+j+0]=a;
-//						}
-//						/*if(in[i*(dims[1]+1*2)+j]>1)
-//						{
-//								if(mt[0][0])output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=in[i*(dims[1]+1*2)+j]-1;
-//								if(mt[0][1])output[(i+0-ox)*(dims[1]+1*2)+j+1-oy]=in[i*(dims[1]+1*2)+j]-1;
-//								if(mt[1][0])output[(i+1-ox)*(dims[1]+1*2)+j+0-oy]=in[i*(dims[1]+1*2)+j]-1;
-//								if(mt[1][1])output[(i+1-ox)*(dims[1]+1*2)+j+1-oy]=in[i*(dims[1]+1*2)+j]-1;
-//								
-//						}
-//						else if(in[i*(dims[1]+1*2)+j]==1)
-//						{
-//							    if(mt[0][0])output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=1;
-//								if(mt[0][1])output[(i+0-ox)*(dims[1]+1*2)+j+1-oy]=1;
-//								if(mt[1][0])output[(i+1-ox)*(dims[1]+1*2)+j+0-oy]=1;
-//								if(mt[1][1])output[(i+1-ox)*(dims[1]+1*2)+j+1-oy]=1;
-//						}*/
-//					}
-//
-//		}
-//		cout<<endl<<"dil  done";
-//		//delete [] a00;delete [] a01;delete [] a10;delete [] a11;
-//		
-//		
-//		
-//		//delete [] output;
-//		delete [] in;
-//		return;
-//	}
-//	else
-//	{
-//		int* in=new int [(dims[0]+2*2)*(dims[1]+2*2)];
-//				
-//		for(int i=0;i<dims[0]+2*2;i++)
-//		{
-//			for(int j=0;j<dims[1]+2*2;j++)
-//			{
-//				in[i*(dims[1]+2*2)+j]=0;
-//			}
-//		}
-//
-//		for(int i=2;i<dims[0]+2;i++)
-//		{
-//			for(int j=2;j<dims[1]+2;j++)
-//			{
-//				in[i*(dims[1]+2*2)+j]=input[(i-2)*(dims[1])+j-2];
-//			}
-//		}
-//
-//		
-//		for(int i=0;i<dims[0]+2*2;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*2;j++)
-//					{
-//						 /*a= gt[0][0]+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						 b1=gt[0][1]+in[(i+0-ox)*(dims[1]+2*2)+j+1-oy];
-//						 c1=gt[0][2]+in[(i+0-ox)*(dims[1]+2*2)+j+2-oy];
-//						 d1=gt[1][0]+in[(i+1-ox)*(dims[1]+2*2)+j+0-oy];
-//						 e1=gt[1][1]+in[(i+1-ox)*(dims[1]+2*2)+j+1-oy];
-//						 f1=gt[1][2]+in[(i+1-ox)*(dims[1]+2*2)+j+2-oy];
-//						 g1=gt[2][0]+in[(i+2-ox)*(dims[1]+2*2)+j+0-oy];
-//						 h1=gt[2][1]+in[(i+2-ox)*(dims[1]+2*2)+j+1-oy];
-//						 i1=gt[2][2]+in[(i+2-ox)*(dims[1]+2*2)+j+2-oy];*/
-//						 if(((i+0-ox)<2)||((i+0-ox)>(dims[0]+1*2))||((j+0-oy)<2)||((j+0-oy)>(dims[1]+1*2)))
-//						{
-//							 a=gt[0][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                             a= gt[0][0]+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}
-//						// for(int j=0;j<dims[1]+2*2;j++)
-//					
-//						if(((i+0-ox)<2)||((i+0-ox)>(dims[0]+1*2))||((j+1-oy)<2)||((j+1-oy)>(dims[1]+1*2)))
-//						{
-//							 b1=gt[0][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                             b1=gt[0][1]+in[(i+0-ox)*(dims[1]+2*2)+j+1-oy];
-//						}
-//						 if(((i+0-ox)<2)||((i+0-ox)>(dims[0]+1*2))||((j+2-oy)<2)||((j+2-oy)>(dims[1]+1*2)))
-//						{
-//							 c1= gt[0][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            c1=gt[0][2]+in[(i+0-ox)*(dims[1]+2*2)+j+2-oy];
-//						}
-//						 if(((i+1-ox)<2)||((i+1-ox)>(dims[0]+1*2))||((j+0-oy)<2)||((j+0-oy)>(dims[1]+1*2)))
-//						{
-//							 d1=gt[1][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            d1=gt[1][0]+in[(i+1-ox)*(dims[1]+2*2)+j+0-oy];
-//						}
-//						 if(((i+1-ox)<2)||((i+1-ox)>(dims[0]+1*2))||((j+1-oy)<2)||((j+1-oy)>(dims[1]+1*2)))
-//						{
-//							 e1=gt[1][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            e1=gt[1][1]+in[(i+1-ox)*(dims[1]+2*2)+j+1-oy];
-//						}
-//						 if(((i+1-ox)<2)||((i+1-ox)>(dims[0]+1*2))||((j+2-oy)<2)||((j+2-oy)>(dims[1]+1*2)))
-//						{
-//							 f1= gt[1][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            f1=gt[1][2]+in[(i+1-ox)*(dims[1]+2*2)+j+2-oy];
-//						}
-//						 if(((i+2-ox)<2)||((i+2-ox)>(dims[0]+1*2))||((j+0-oy)<2)||((j+0-oy)>(dims[1]+1*2)))
-//						{
-//							 g1=gt[2][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            g1=gt[2][0]+in[(i+2-ox)*(dims[1]+2*2)+j+0-oy];
-//						}
-//						 if(((i+2-ox)<2)||((i+2-ox)>(dims[0]+1*2))||((j+1-oy)<2)||((j+1-oy)>(dims[1]+1*2)))
-//						{
-//							 h1=gt[2][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            h1=gt[2][1]+in[(i+2-ox)*(dims[1]+2*2)+j+1-oy];
-//						}
-//						 if(((i+2-ox)<2)||((i+2-ox)>(dims[0]+1*2))||((j+2-oy)<2)||((j+2-oy)>(dims[1]+1*2)))
-//						{
-//							 i1= gt[2][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            i1=gt[2][2]+in[(i+2-ox)*(dims[1]+2*2)+j+2-oy];
-//						}
-//						 if(!((a==gt[0][0])&& (b1== gt[0][1])&&(c1== gt[0][2])&&(d1==gt[1][0])&&(e1==gt[1][1])&& (f1== gt[1][2])&&(g1== gt[2][0])&&(h1==gt[2][1])&&(i1==gt[2][2])))
-//						 {
-//							 if(a<b1)a=b1;
-//							 if(a<c1)a=c1;
-//							 if(a<d1)a=d1;
-//							 if(a<e1)a=e1;
-//							 if(a<f1)a=f1;
-//							 if(a<g1)a=g1;
-//							 if(a<h1)a=h1;
-//							 if(a<i1)a=i1;
-//							  if(a>255)a=255;
-//							//output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=a;
-//							 output[(i+0)*(dims[1]+2*2)+j+0]=a;
-//						 }
-//						/*if(in[i*(dims[1]+2*2)+j]>1)
-//						{
-//								if(mt[0][0])output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[0][1])output[(i+0-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[0][2])output[(i+0-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[1][0])output[(i+1-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[1][1])output[(i+1-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[1][2])output[(i+1-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[2][0])output[(i+2-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[2][1])output[(i+2-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[2][2])output[(i+2-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								
-//						}
-//						else if(in[i*(dims[1]+2*2)+j]==1)
-//						{
-//							    if(mt[0][0])output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=1;
-//								if(mt[0][1])output[(i+0-ox)*(dims[1]+2*2)+j+1-oy]=1;
-//								if(mt[0][2])output[(i+0-ox)*(dims[1]+2*2)+j+2-oy]=1;
-//								if(mt[1][0])output[(i+1-ox)*(dims[1]+2*2)+j+0-oy]=1;
-//								if(mt[1][1])output[(i+1-ox)*(dims[1]+2*2)+j+1-oy]=1;
-//								if(mt[1][2])output[(i+1-ox)*(dims[1]+2*2)+j+2-oy]=1;
-//								if(mt[2][0])output[(i+2-ox)*(dims[1]+2*2)+j+0-oy]=1;
-//								if(mt[2][1])output[(i+2-ox)*(dims[1]+2*2)+j+1-oy]=1;
-//								if(mt[2][2])output[(i+2-ox)*(dims[1]+2*2)+j+2-oy]=1;
-//						}*/
-//					}
-//
-//		}
-//		cout<<endl<<"dil  done";
-//		return;
-//
-//		delete [] in;
-//
-//	}
-//}
+
 void do_gdilate(int* input,int* output,int gt[][3],int ox,int oy,int size)
 {
 	int a=0; int b1=0;int c1=0;
@@ -2875,16 +2623,7 @@ void g_dilation(Fl_Widget*, void*)
 				 
 			 } 
 
-//for(int i=0;i<dims[0]+2*c;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*c;j++)
-//					{
-//						if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
-//						
-//					}
-//
-//		}
+
 //=========================================================================
     int j=0;
 	bin->Initialize();
@@ -2911,140 +2650,13 @@ void g_dilation(Fl_Widget*, void*)
   
  
 	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
-   
-  
  
   SliceWin[3]->Render();
 
-
 }
-//void g_dilation(Fl_Widget*, void*)
-//{
-//	
-//	if(!jpegReader)return;
-//	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-//	//binimage(threshold);
-//	
-//
-// //for (int x=0; x <dims[0]; x++)
-// //{
-//	// for(int y=0;y<dims[1];y++)
-// //   {
-//	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
-// //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-//	//   imagematrix[i]=I[0];
-//	//   i++;
-// //   
-//	//}
-//	// //cout<<endl<<int(threshold1);
-// //} 
-//
-//	gt[0][0]=atof(inpg0->value());
-//	gt[0][1]=atof(inpg1->value());
-//	gt[0][2]=atof(inpg2->value());
-//	gt[1][0]=atof(inpg3->value());
-//	gt[1][1]=atof(inpg4->value());
-//	gt[1][2]=atof(inpg5->value());
-//	gt[2][0]=atof(inpg6->value());
-//	gt[2][1]=atof(inpg7->value());
-//	gt[2][2]=atof(inpg8->value());
-//	int gxx=atof(gxi->value());
-//	int gyy=atof(gyi->value());
-//	int gks=2;
-//	if(gt[0][2]||gt[1][2]||gt[2][2]||gt[2][0]||gt[2][1])
-//	{
-//		gks=3;
-//		
-//	}
-//	//{
-//	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-//	//}
-//	int c=ceil(gks/2.0);
-//	int * ot =new int[(dims[0]+2*c)*(dims[1]+2*c)];
-//	for(int i=0;i<dims[0]+2*c;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*c;j++)
-//					{
-//						ot[i*(dims[1]+2*c)+j]=0;
-//					}
-//
-//		}
-//	cout<<"to do"<<imagematrix<<":"<<ot<<":"<<mt<<":"<<gxx<<gyy<<gks<<c;
-////=========================================================================
-//	//do_dilate(int* input,int* output,int*kernel,int ox,int oy,int size)
-//	do_gdilate(gimagematrix,ot,gt,gxx,gyy,gks);
-//	cout<<"done";
-//	
-////=========================================================================
-//	int i=0;
-//	 for (int x=c; x <dims[0]+c; x++)
-//			 {
-//				 for(int y=c;y<dims[1]+c;y++)
-//				{
-//					
-//						gimagematrix[(x-c)*(dims[1])+y-c]=ot[x*(dims[1]+2*c)+y];//cout<<I[0];
-//					
-//				   i++;
-//				   
-//    
-//				}
-//				 
-//			 } 
-//
-////for(int i=0;i<dims[0]+2*c;i++)
-////		{
-////
-////					for(int j=0;j<dims[1]+2*c;j++)
-////					{
-////						if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
-////						
-////					}
-////
-////		}
-////=========================================================================
-//    int j=0;
-//	bin->Initialize();
-//	//bi=vtkFloatArray::New();
-//	for (int x = c; x < dims[0]+c; x++)
-//	{
-//		for(int y=c;y<dims[1]+c;y++)
-//	{
-//		
-//				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-//				//pixel[0] = x*10;
-//				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-//				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
-//		        bin->InsertTuple1(x-c+(y-c)*(dims[0]),ot[y+x*(dims[1]+2*c)]);
-//			    j++;
-//		}
-//
-//	
-//	}
-//		//cout<<endl<<int(threshold1);
-//	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-//	//binaryimage->SetDimensions(d33);
-//	binaryimage->GetPointData()->SetScalars(bin);
-//  
-// 
-//	//binmap->Update();
-//  
-//    
-// 
-//
-//	delete [] ot;
-//   
-//  
-// 
-//  SliceWin[3]->Render();
-//
-//
-//}
+
 //=============================================================
 void g_reset(Fl_Widget*, void*)
 {
@@ -3070,243 +2682,7 @@ void g_reset(Fl_Widget*, void*)
 }
 //=======================================================================================
 
-//void do_gerode(int* input,int* output,int gt[][3],int ox,int oy,int size)
-//{
-//	int a=0; int b1=0;int c1=0;
-//	int d1=0;int e1=0;int f1=0;
-//	int g1=0;int h1=0;int i1=0;
-//	if(size==2)
-//	{
-//		int* in=new int [(dims[0]+1*2)*(dims[1]+1*2)];
-//				
-//		for(int i=0;i<dims[0]+1*2;i++)
-//		{
-//			for(int j=0;j<dims[1]+1*2;j++)
-//			{
-//				in[i*(dims[1]+1*2)+j]=0;
-//			}
-//		}
-//
-//		for(int i=1;i<dims[0]+1;i++)
-//		{
-//			for(int j=1;j<dims[1]+1;j++)
-//			{
-//				in[i*(dims[1]+1*2)+j]=input[(i-1)*(dims[1])+j-1];
-//			}
-//		}
-//		
-//		
-//		for(int i=0;i<dims[0]+1*2;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+1*2;j++)
-//					{
-//						if(((i+0-ox)<1)||((i+0-ox)>(dims[0]+1*1))||((j+0-oy)<1)||((j+0-oy)>(dims[1]+1*1)))
-//						{
-//							 a=-gt[0][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            a=-gt[0][0]+in[(i+0-ox)*(dims[1]+1*2)+j+0-oy];
-//						}
-//						 if(((i+0-ox)<1)||((i+0-ox)>(dims[0]+1*1))||((j+1-oy)<1)||((j+1-oy)>(dims[1]+1*1)))
-//						{
-//							 b1= -gt[0][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            b1=-gt[0][1]+in[(i+0-ox)*(dims[1]+1*2)+j+1-oy];
-//						}
-//						  if(((i+1-ox)<1)||((i+1-ox)>(dims[0]+1*1))||((j+0-oy)<1)||((j+0-oy)>(dims[1]+1*1)))
-//						{
-//							 c1=-gt[1][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            c1=-gt[1][0]+in[(i+1-ox)*(dims[1]+1*2)+j+0-oy];
-//						}
-//						  if(((i+1-ox)<1)||((i+1-ox)>(dims[0]+1*1))||((j+1-oy)<1)||((j+1-oy)>(dims[1]+1*1)))
-//						{
-//							 d1=-gt[1][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            d1=-gt[1][1]+in[(i+1-ox)*(dims[1]+1*2)+j+1-oy];
-//						}
-//						if(!((a==-gt[0][0])&& (b1== -gt[0][1])&&(c1== -gt[1][0])&&(d1==-gt[1][1])) )
-//						{
-//							 if(a>b1)a=b1;
-//							 if(a>c1)a=c1;
-//							 if(a>d1)a=d1;
-//							  if(a<0)a=0;
-//							//output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=a;
-//							 output[(i+0)*(dims[1]+1*2)+j+0]=a;
-//						}
-//
-//						/*if(in[i*(dims[1]+1*2)+j]>1)
-//						{
-//								if(mt[0][0])output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=in[i*(dims[1]+1*2)+j]-1;
-//								if(mt[0][1])output[(i+0-ox)*(dims[1]+1*2)+j+1-oy]=in[i*(dims[1]+1*2)+j]-1;
-//								if(mt[1][0])output[(i+1-ox)*(dims[1]+1*2)+j+0-oy]=in[i*(dims[1]+1*2)+j]-1;
-//								if(mt[1][1])output[(i+1-ox)*(dims[1]+1*2)+j+1-oy]=in[i*(dims[1]+1*2)+j]-1;
-//								
-//						}
-//						else if(in[i*(dims[1]+1*2)+j]==1)
-//						{
-//							    if(mt[0][0])output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=1;
-//								if(mt[0][1])output[(i+0-ox)*(dims[1]+1*2)+j+1-oy]=1;
-//								if(mt[1][0])output[(i+1-ox)*(dims[1]+1*2)+j+0-oy]=1;
-//								if(mt[1][1])output[(i+1-ox)*(dims[1]+1*2)+j+1-oy]=1;
-//						}*/
-//					}
-//
-//		}
-//		cout<<endl<<"dil  done";
-//		//delete [] a00;delete [] a01;delete [] a10;delete [] a11;
-//		
-//		
-//		
-//		//delete [] output;
-//		delete [] in;
-//		return;
-//	}
-//	else
-//	{
-//		int* in=new int [(dims[0]+2*2)*(dims[1]+2*2)];
-//				
-//		for(int i=0;i<dims[0]+2*2;i++)
-//		{
-//			for(int j=0;j<dims[1]+2*2;j++)
-//			{
-//				in[i*(dims[1]+2*2)+j]=0;
-//			}
-//		}
-//
-//		for(int i=2;i<dims[0]+2;i++)
-//		{
-//			for(int j=2;j<dims[1]+2;j++)
-//			{
-//				in[i*(dims[1]+2*2)+j]=input[(i-2)*(dims[1])+j-2];
-//			}
-//		}
-//
-//		
-//		for(int i=0;i<dims[0]+2*2;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*2;j++)
-//					{
-//						
-//						if(((i+0-ox)<2)||((i+0-ox)>(dims[0]+1*2))||((j+0-oy)<2)||((j+0-oy)>(dims[1]+1*2)))
-//						{
-//							 a= -gt[0][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                             a= -gt[0][0]+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						};
-//						 
-//					
-//						if(((i+0-ox)<2)||((i+0-ox)>(dims[0]+1*2))||((j+1-oy)<2)||((j+1-oy)>(dims[1]+1*2)))
-//						{
-//							 b1= -gt[0][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                             b1=-gt[0][1]+in[(i+0-ox)*(dims[1]+2*2)+j+1-oy];
-//						};
-//						 if(((i+0-ox)<2)||((i+0-ox)>(dims[0]+1*2))||((j+2-oy)<2)||((j+2-oy)>(dims[1]+1*2)))
-//						{
-//							 c1= -gt[0][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            c1=-gt[0][2]+in[(i+0-ox)*(dims[1]+2*2)+j+2-oy];
-//						};
-//						 if(((i+1-ox)<2)||((i+1-ox)>(dims[0]+1*2))||((j+0-oy)<2)||((j+0-oy)>(dims[1]+1*2)))
-//						{
-//							 d1= -gt[1][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            d1=-gt[1][0]+in[(i+1-ox)*(dims[1]+2*2)+j+0-oy];
-//						};
-//						 if(((i+1-ox)<2)||((i+1-ox)>(dims[0]+1*2))||((j+1-oy)<2)||((j+1-oy)>(dims[1]+1*2)))
-//						{
-//							 e1=-gt[1][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            e1=-gt[1][1]+in[(i+1-ox)*(dims[1]+2*2)+j+1-oy];
-//						};
-//						 if(((i+1-ox)<2)||((i+1-ox)>(dims[0]+1*2))||((j+2-oy)<2)||((j+2-oy)>(dims[1]+1*2)))
-//						{
-//							 f1=-gt[1][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            f1=-gt[1][2]+in[(i+1-ox)*(dims[1]+2*2)+j+2-oy];
-//						};
-//						 if(((i+2-ox)<2)||((i+2-ox)>(dims[0]+1*2))||((j+0-oy)<2)||((j+0-oy)>(dims[1]+1*2)))
-//						{
-//							 g1= -gt[2][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            g1=-gt[2][0]+in[(i+2-ox)*(dims[1]+2*2)+j+0-oy];
-//						};
-//						 if(((i+2-ox)<2)||((i+2-ox)>(dims[0]+1*2))||((j+1-oy)<2)||((j+1-oy)>(dims[1]+1*2)))
-//						{
-//							 h1= -gt[2][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            h1=-gt[2][1]+in[(i+2-ox)*(dims[1]+2*2)+j+1-oy];
-//						};
-//						 if(((i+2-ox)<2)||((i+2-ox)>(dims[0]+1*2))||((j+2-oy)<2)||((j+2-oy)>(dims[1]+1*2)))
-//						{
-//							 i1=-gt[2][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-//						}else
-//						{
-//                            i1=-gt[2][2]+in[(i+2-ox)*(dims[1]+2*2)+j+2-oy];
-//						};
-//						if(!((a==-gt[0][0])&& (b1== -gt[0][1])&&(c1== -gt[0][2])&&(d1==-gt[1][0])&&(e1==-gt[1][1])&& (f1== -gt[1][2])&&(g1== -gt[2][0])&&(h1==-gt[2][1])&&(i1==-gt[2][2])))
-//						 { 
-//							 if(a>b1)a=b1;
-//							 if(a>c1)a=c1;
-//							 if(a>d1)a=d1;
-//							 if(a>e1)a=e1;
-//							 if(a>f1)a=f1;
-//							 if(a>g1)a=g1;
-//							 if(a>h1)a=h1;
-//							 if(a>i1)a=i1;
-//							  if(a<0)a=0;
-//							//output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=a;
-//							 output[(i+0)*(dims[1]+2*2)+j+0]=a;
-//						}
-//						/*if(in[i*(dims[1]+2*2)+j]>1)
-//						{
-//								if(mt[0][0])output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[0][1])output[(i+0-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[0][2])output[(i+0-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[1][0])output[(i+1-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[1][1])output[(i+1-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[1][2])output[(i+1-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[2][0])output[(i+2-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[2][1])output[(i+2-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								if(mt[2][2])output[(i+2-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-//								
-//						}
-//						else if(in[i*(dims[1]+2*2)+j]==1)
-//						{
-//							    if(mt[0][0])output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=1;
-//								if(mt[0][1])output[(i+0-ox)*(dims[1]+2*2)+j+1-oy]=1;
-//								if(mt[0][2])output[(i+0-ox)*(dims[1]+2*2)+j+2-oy]=1;
-//								if(mt[1][0])output[(i+1-ox)*(dims[1]+2*2)+j+0-oy]=1;
-//								if(mt[1][1])output[(i+1-ox)*(dims[1]+2*2)+j+1-oy]=1;
-//								if(mt[1][2])output[(i+1-ox)*(dims[1]+2*2)+j+2-oy]=1;
-//								if(mt[2][0])output[(i+2-ox)*(dims[1]+2*2)+j+0-oy]=1;
-//								if(mt[2][1])output[(i+2-ox)*(dims[1]+2*2)+j+1-oy]=1;
-//								if(mt[2][2])output[(i+2-ox)*(dims[1]+2*2)+j+2-oy]=1;
-//						}*/
-//					}
-//
-//		}
-//		cout<<endl<<"erosion  done";
-//		return;
-//
-//		delete [] in;
-//
-//	};
-//};
+
 
 void do_gerode(int* input,int* output,int gt[][3],int ox,int oy,int size)
 {
@@ -3619,16 +2995,6 @@ void g_erosion(Fl_Widget*, void*)
 				 
 			 } 
 
-//for(int i=0;i<dims[0]+2*c;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*c;j++)
-//					{
-//						if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
-//						
-//					}
-//
-//		}
 //=========================================================================
     int j=0;
 	bin->Initialize();
@@ -3665,126 +3031,6 @@ void g_erosion(Fl_Widget*, void*)
  
   SliceWin[3]->Render();
 }
-//void g_erosion(Fl_Widget*, void*)
-//{
-//	
-//	if(!jpegReader)return;
-//	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-//	//binimage(threshold);
-//	
-//
-// //for (int x=0; x <dims[0]; x++)
-// //{
-//	// for(int y=0;y<dims[1];y++)
-// //   {
-//	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
-// //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-//	//   imagematrix[i]=I[0];
-//	//   i++;
-// //   
-//	//}
-//	// //cout<<endl<<int(threshold1);
-// //} 
-//
-//	gt[0][0]=atof(inpg0->value());
-//	gt[0][1]=atof(inpg1->value());
-//	gt[0][2]=atof(inpg2->value());
-//	gt[1][0]=atof(inpg3->value());
-//	gt[1][1]=atof(inpg4->value());
-//	gt[1][2]=atof(inpg5->value());
-//	gt[2][0]=atof(inpg6->value());
-//	gt[2][1]=atof(inpg7->value());
-//	gt[2][2]=atof(inpg8->value());
-//	int gxx=atof(gxi->value());
-//	int gyy=atof(gyi->value());
-//	int gks=2;
-//	if(gt[0][2]||gt[1][2]||gt[2][2]||gt[2][0]||gt[2][1])
-//	{
-//		gks=3;
-//		
-//	}
-//	//{
-//	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-//	//}
-//	int c=ceil(gks/2.0);
-//	int * ot =new int[(dims[0]+2*c)*(dims[1]+2*c)];
-//	for(int i=0;i<dims[0]+2*c;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*c;j++)
-//					{
-//						ot[i*(dims[1]+2*c)+j]=0;
-//					}
-//
-//		}
-//	cout<<"to do"<<imagematrix<<":"<<ot<<":"<<mt<<":"<<gxx<<gyy<<gks<<c;
-////=========================================================================
-//	//do_dilate(int* input,int* output,int*kernel,int ox,int oy,int size)
-//	do_gerode(gimagematrix,ot,gt,gxx,gyy,gks);
-//	cout<<"done";
-//	
-////=========================================================================
-//	int i=0;
-//	 for (int x=c; x <dims[0]+c; x++)
-//			 {
-//				 for(int y=c;y<dims[1]+c;y++)
-//				{
-//					
-//						gimagematrix[(x-c)*(dims[1])+y-c]=ot[x*(dims[1]+2*c)+y];//cout<<I[0];
-//					
-//				   i++;
-//				   
-//    
-//				}
-//				 
-//			 } 
-//
-////for(int i=0;i<dims[0]+2*c;i++)
-////		{
-////
-////					for(int j=0;j<dims[1]+2*c;j++)
-////					{
-////						if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
-////						
-////					}
-////
-////		}
-////=========================================================================
-//    int j=0;
-//	bin->Initialize();
-//	//bi=vtkFloatArray::New();
-//	for (int x = c; x < dims[0]+c; x++)
-//	{
-//		for(int y=c;y<dims[1]+c;y++)
-//	{
-//		
-//				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-//				//pixel[0] = x*10;
-//				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-//				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
-//		        bin->InsertTuple1(x-c+(y-c)*(dims[0]),ot[y+x*(dims[1]+2*c)]);
-//			    j++;
-//		}
-//
-//	
-//	}
-//		//cout<<endl<<int(threshold1);
-//	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-//	//binaryimage->SetDimensions(d33);
-//	binaryimage->GetPointData()->SetScalars(bin);
-//  
-// 
-//	//binmap->Update();
-//  
-//    
-// 
-//
-//	delete [] ot;
-//   
-//  
-// 
-//  SliceWin[3]->Render();
-//}
 
 //==========================================================================================
 
@@ -3841,22 +3087,6 @@ void do_gclosing(int* input,int* output,int mt[][3],int ox,int oy,int size)
 void g_closing(Fl_Widget*, void*)
 {
 	if(!jpegReader)return;
-	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-	//binimage(threshold);
-	
-
- //for (int x=0; x <dims[0]; x++)
- //{
-	// for(int y=0;y<dims[1];y++)
- //   {
-	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
- //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-	//   imagematrix[i]=I[0];
-	//   i++;
- //   
-	//}
-	// //cout<<endl<<int(threshold1);
- //} 
 
 	gt[0][0]=atof(inpg0->value());
 	gt[0][1]=atof(inpg1->value());
@@ -3875,9 +3105,7 @@ void g_closing(Fl_Widget*, void*)
 		gks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(gks/2.0);
 	int * ot =new int[(dims[0])*(dims[1])];
 	for(int i=0;i<dims[0];i++)
@@ -3911,16 +3139,7 @@ void g_closing(Fl_Widget*, void*)
 				 
 			 } 
 
-//for(int i=0;i<dims[0]+2*c;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*c;j++)
-//					{
-//						if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
-//						
-//					}
-//
-//		}
+
 //=========================================================================
     int j=0;
 	bin->Initialize();
@@ -4015,22 +3234,7 @@ void do_gopening(int* input,int* output,int mt[][3],int ox,int oy,int size)
 void g_opening(Fl_Widget*, void*)
 {
 	if(!jpegReader)return;
-	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-	//binimage(threshold);
-	
 
- //for (int x=0; x <dims[0]; x++)
- //{
-	// for(int y=0;y<dims[1];y++)
- //   {
-	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
- //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-	//   imagematrix[i]=I[0];
-	//   i++;
- //   
-	//}
-	// //cout<<endl<<int(threshold1);
- //} 
 
 	gt[0][0]=atof(inpg0->value());
 	gt[0][1]=atof(inpg1->value());
@@ -4085,16 +3289,7 @@ void g_opening(Fl_Widget*, void*)
 				 
 			 } 
 
-//for(int i=0;i<dims[0]+2*c;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*c;j++)
-//					{
-//						if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
-//						
-//					}
-//
-//		}
+
 //=========================================================================
     int j=0;
 	bin->Initialize();
@@ -4191,22 +3386,7 @@ void do_edgedetect(int* input,int* output,int mt[][3],int ox,int oy,int size)
 void m_edgedetection(Fl_Widget*, void*)
 {
 	if(!jpegReader)return;
-	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-	//binimage(threshold);
-	
 
- //for (int x=0; x <dims[0]; x++)
- //{
-	// for(int y=0;y<dims[1];y++)
- //   {
-	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
- //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-	//   imagematrix[i]=I[0];
-	//   i++;
- //   
-	//}
-	// //cout<<endl<<int(threshold1);
- //} 
 
 	mt[0][0]=atof(inpm0->value());
 	mt[0][1]=atof(inpm1->value());
@@ -4370,22 +3550,6 @@ void do_morphogradient(int* input,int* output,int mt[][3],int ox,int oy,int size
 void m_morphogradient(Fl_Widget*, void*)
 {
 	if(!jpegReader)return;
-	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-	//binimage(threshold);
-	
-
- //for (int x=0; x <dims[0]; x++)
- //{
-	// for(int y=0;y<dims[1];y++)
- //   {
-	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
- //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-	//   imagematrix[i]=I[0];
-	//   i++;
- //   
-	//}
-	// //cout<<endl<<int(threshold1);
- //} 
 
 	gt[0][0]=atof(inpg0->value());
 	gt[0][1]=atof(inpg1->value());
@@ -4404,9 +3568,7 @@ void m_morphogradient(Fl_Widget*, void*)
 		gks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(gks/2.0);
 	int * ot =new int[(dims[0])*(dims[1])];
 	for(int i=0;i<dims[0];i++)
@@ -4440,16 +3602,7 @@ void m_morphogradient(Fl_Widget*, void*)
 				 
 			 } 
 
-//for(int i=0;i<dims[0]+2*c;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*c;j++)
-//					{
-//						if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
-//						
-//					}
-//
-//		}
+
 //=========================================================================
     int j=0;
 	bin->Initialize();
@@ -4457,12 +3610,8 @@ void m_morphogradient(Fl_Widget*, void*)
 	for (int x = 0; x < dims[0]; x++)
 	{
 		for(int y=0;y<dims[1];y++)
-	{
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
+
 		        bin->InsertTuple1(x+(y)*(dims[0]),ot[y+x*(dims[1])]);
 			    j++;
 		}
@@ -4493,76 +3642,7 @@ void m_morphogradient(Fl_Widget*, void*)
 void do_conditionaldilation(int* input,int* output,int mt[][3],int ox,int oy,int size)
 {
 	int px=atoi(pickx->value());int py=atoi(picky->value());
-	//int c=ceil(size/2.0);
-	///*int max_y=y;int max_x=x;
-	//while(input[x*dims[1]+max_y])
-	//{
-	//    max_y++;
-	//}
-	//while(input[max_x*dims[1]+y])
-	//{
-	//    max_x++;
-	//}
-	//int min_y=y;int min_x=x;
-	//while(input[x*dims[1]+min_y])
-	//{
-	//    min_y--;
-	//}
-	//while(input[min_x*dims[1]+y])
-	//{
-	//    min_x--;
-	//}
 
-	//int w=max_x-min_x;int h=max_y-min_y;*/
-
-	//int * ot =new int[(dims[0]+2*c)*(dims[1]+2*c)];
-	//for(int i=0;i<dims[0]+2*c;i++)
-	//	{
-
-	//				for(int j=0;j<dims[1]+2*c;j++)
-	//				{
-	//					//cout<<ot[i*(dims[1]+2*c)+j];
-	//					//if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
-	//					ot[i*(dims[1]+2*c)+j]=0;
-	//					
-	//				}
-
-	//	}
-
-	//do_dilate(input,ot,mt,ox,oy, size);
-	//int * ot1 =new int[(dims[0]+2*c)*(dims[1]+2*c)];
-	//for(int i=0;i<dims[0]+2*c;i++)
-	//	{
-
-	//				for(int j=0;j<dims[1]+2*c;j++)
-	//				{
-	//					//cout<<ot[i*(dims[1]+2*c)+j];
-	//					//if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
-	//					ot1[i*(dims[1]+2*c)+j]=0;
-	//					
-	//				}
-
-	//	}
-
-	//do_erode(input,ot1,mt,ox,oy, size);
-
-	//int i=0;
-	// for (int x=0; x <dims[0]+2*c; x++)
-	//		 {
-	//			 for(int y=0;y<dims[1]+2*c;y++)
-	//			{
-	//				
-	//					output[i]=ot[x*(dims[1]+2*c)+y]-ot1[x*(dims[1]+2*c)+y];//cout<<I[0];
-	//				
-	//			   i++;
-	//			   
- //   
-	//			}
-	//			 
-	//		 } 
-
-	//delete [] ot;
-	//delete [] ot1;
 	int* in=new int [(dims[0])*(dims[1])];
 	//int ones=0;
 	for(int i=0;i<dims[0];i++)
@@ -4668,22 +3748,7 @@ void do_conditionaldilation(int* input,int* output,int mt[][3],int ox,int oy,int
 void m_conditionaldilation(Fl_Widget*, void*)
 {
 	if(!jpegReader)return;
-	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-	//binimage(threshold);
-	
 
- //for (int x=0; x <dims[0]; x++)
- //{
-	// for(int y=0;y<dims[1];y++)
- //   {
-	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
- //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-	//   imagematrix[i]=I[0];
-	//   i++;
- //   
-	//}
-	// //cout<<endl<<int(threshold1);
- //} 
 
 	mt[0][0]=atof(inpm0->value());
 	mt[0][1]=atof(inpm1->value());
@@ -4702,9 +3767,7 @@ void m_conditionaldilation(Fl_Widget*, void*)
 		ks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(ks/2.0);
 	int * ot =new int[(dims[0]+2*c)*(dims[1]+2*c)];
 	for(int i=0;i<dims[0]+2*c;i++)
@@ -4755,32 +3818,18 @@ for(int i=0;i<dims[0]+2*c;i++)
 	for (int x = c; x < dims[0]+c; x++)
 	{
 		for(int y=c;y<dims[1]+c;y++)
-	{
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
 		        bin->InsertTuple1(x-c+(y-c)*(dims[0]),ot[y+x*(dims[1]+2*c)]);
-			    j++;
+			j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
-   
-  
+ 
  
   SliceWin[3]->Render();
 
@@ -4877,25 +3926,9 @@ void do_grayscalerecon(int* input,int* mask,int* output,int gt[][3],int ox,int o
 					 {
 						 for(int y=0;y<dims[1];y++)
 						{
-					   //         if(input[(x-c)*(dims[1])+y-c]<=ot[x*(dims[1]+2*c)+y])
-								//{
-								//	//output[x*(dims[1]+2*c)+y]=1;//ot[x*(dims[1]+2*c)+y];//cout<<I[0];
-								//	in[(x-c)*(dims[1])+y-c]=input[(x-c)*(dims[1])+y-c];
-								//}
-								//else //if()
-								//{
-								//	in[(x-c)*(dims[1])+y-c]=ot[(x-c)*(dims[1])+y-c];
-								//}
+
 							output[x*(dims[1])+y]=ot[x*(dims[1])+y];
-								//if(input[(x-c)*(dims[1])+y-c]*ot[x*(dims[1]+2*c)+y])
-								//{
-								//	output[x*(dims[1]+2*c)+y]=ot[x*(dims[1]+2*c)+y];//ot[x*(dims[1]+2*c)+y];//cout<<I[0];
-								//	//in[(x-c)*(dims[1])+y-c]=1;
-								//}
-								//else
-								//{
-								//	output[x*(dims[1]+2*c)+y]=0;
-								//}
+
 					   
 						   i++;
 				   
@@ -4903,14 +3936,7 @@ void do_grayscalerecon(int* input,int* mask,int* output,int gt[][3],int ox,int o
 						}
 				 
 					 } 
-	//for(int i=c;i<dims[0]+c;i++)
-	//			{
-	//						for(int j=c;j<dims[1]+c;j++)
-	//						{
-	//							if((input[(i-c)*(dims[1])+j-c]==1)&&(ot[i*(dims[1]+2*c)+j]!=2))
-	//							output[i*(dims[1]+2*c)+j]=1;//ot[i*(dims[1]+2*c)+j]+input[(i-c)*(dims[1])+j-c];
-	//						}
-	//			}
+
 	delete [] ot;
 
 }
@@ -4920,22 +3946,7 @@ void do_grayscalerecon(int* input,int* mask,int* output,int gt[][3],int ox,int o
 void m_grayscalerecon(Fl_Widget*, void*)
 {
 	if(!jpegReader)return;
-	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-	//binimage(threshold);
-	
 
- //for (int x=0; x <dims[0]; x++)
- //{
-	// for(int y=0;y<dims[1];y++)
- //   {
-	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
- //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-	//   imagematrix[i]=I[0];
-	//   i++;
- //   
-	//}
-	// //cout<<endl<<int(threshold1);
- //} 
 
 	gt[0][0]=atof(inpg0->value());
 	gt[0][1]=atof(inpg1->value());
@@ -4954,9 +3965,7 @@ void m_grayscalerecon(Fl_Widget*, void*)
 		gks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(gks/2.0);
 	int * ot =new int[(dims[0])*(dims[1])];
 	for(int i=0;i<dims[0];i++)
@@ -5001,16 +4010,7 @@ void m_grayscalerecon(Fl_Widget*, void*)
 				 
 			 } 
 
-//for(int i=0;i<dims[0]+2*c;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*c;j++)
-//					{
-//						if(ot[i*(dims[1]+2*c)+j]==2)ot[i*(dims[1]+2*c)+j]=121;
-//						if(ot[i*(dims[1]+2*c)+j]==1)ot[i*(dims[1]+2*c)+j]=0;//255;
-//					}
-//
-//		}
+
 //=========================================================================
     int j=0;
 	bin->Initialize();
@@ -5018,28 +4018,16 @@ void m_grayscalerecon(Fl_Widget*, void*)
 	for (int x = 0; x < dims[0]; x++)
 	{
 		for(int y=0;y<dims[1];y++)
-	    {
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
+
 		        bin->InsertTuple1(x+(y)*(dims[0]),ot[y+x*(dims[1])]);
-			    j++;
+			j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -5066,19 +4054,11 @@ UserInterfaceGUI::UserInterfaceGUI()
 			{	ImageGrp = new Fl_Group(0, 55, 130, 755,"P1");
 		        ImageGrp->align(FL_ALIGN_LEFT);
 		        {	 Fl_Button *otsu = new Fl_Button(15, 95, 100, 25,"Otsu");
-					//	otsu->labelsize(14);
-					//	otsu->align(FL_ALIGN_CLIP|FL_ALIGN_CENTER);
-					//	otsu->box(FL_PLASTIC_UP_BOX);
-					//	otsu->down_box(FL_PLASTIC_DOWN_BOX);
-					//	otsu->color(FL_WHITE);
+
 						otsu->callback((Fl_Callback*)otsu_cb);
 			    } 
 		        {	 Fl_Button *maxent = new Fl_Button(15, 125, 100, 25,"MaxEntropy");
-					//	maxent->labelsize(14);
-					//	maxent->align(FL_ALIGN_CLIP|FL_ALIGN_CENTER);
-					//	maxent->box(FL_PLASTIC_UP_BOX);
-					//	maxent->down_box(FL_PLASTIC_DOWN_BOX);
-					//	maxent->color(FL_WHITE);
+
 						maxent->callback((Fl_Callback*)maxent_cb);
 			    } 
 				
