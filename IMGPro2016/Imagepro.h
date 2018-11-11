@@ -65,7 +65,7 @@ public:
 	void onhistogram();//create a histogram and a binary picture;
 	void onsliceslider();
 	vtkJPEGReader* reader ;
-    vtkImageViewer* jpg_viewer[4];
-    void present(char*n);
+    	vtkImageViewer* jpg_viewer[4];
+    	void present(char*n);
 	vtkInteractorStyle *User2D[3];
 }
