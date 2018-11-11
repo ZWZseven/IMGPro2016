@@ -20,8 +20,8 @@ int main(int argc, char **argv)
 	if (!dvisual) Fl::visual(FL_RGB);
     if (argv[1]) load_file(argv[1]);
 
-	gui->Show();	// 显示用户界面								
-	gui->Redraw();	// 最大化用户界面
+	gui->Show();	// show the user interface								
+	gui->Redraw();	// maximize the user interface	
 	Fl::run();
 
 	delete gui;
