@@ -28,14 +28,4 @@ void imagepro::present(char*n)
 	 
      reader->SetFileName ( n );
 	 
-    /* jpg_viewer[0]->SetInputConnection(reader->GetOutputPort() );
-     jpg_viewer[0]->SetZSlice(0);
-	 jpg_viewer[0]->SetColorWindow(2000);
-	 jpg_viewer[0]->SetColorLevel(1000);
-	vtkActor2D*a;
-	a= jpg_viewer[0]->GetActor2D(); 
-		a->SetPosition(SliceLeftLow);*/
-	//SliceRenderer[0]->AddActor2D(reslice_viewer[0]->GetActor2D());
-	//SliceRenderer[0]->AddActor2D(jpg_viewer->GetActor2D());
-	//User2D[0]->SetImageDataInput(this->ImageData);
 }
