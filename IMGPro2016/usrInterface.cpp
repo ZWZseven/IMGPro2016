@@ -109,28 +109,11 @@ void left(vtkObject *caller, unsigned long eid, void *clientdata, void *calldata
 	picky->value(cs1);
 
 	float temp=binaryimage->GetScalarComponentAsFloat(selPt[0],selPt[1],0,0);
-	printf("像素为:  %f\n",temp);
+	printf("Image pixels:  %f\n",temp);
 
 	//style->OnLeftButtonDown();
 }
 
-//void MyExecute(vtkObject *caller, unsigned long eid, void *clientdata, void *calldata)
-//{
-//	double selPt[3];
-//	picker->GetSelectionPoint(selPt);
-//	printf("X:  %f, Y:  %f\n",selPt[0],selPt[1]);
-//
-//	float temp=binaryimage->GetScalarComponentAsFloat(selPt[0],selPt[1],0,0);
-//	printf("像素为:  %d\f",temp);
-//	/*
-//	double globalCoordinate[3]; 
-//	picker->GetPickPosition(globalCoordinate);
-//	printf("X:  %f, Y:  %f, Z:  %f\n",
-//	globalCoordinate[0],globalCoordinate[1],globalCoordinate[2]);
-//	*/
-//	style->OnLeftButtonDown();
-//}
-//=================================================================
 void vtkFlRenderWindowInteractor::SaveAsJPG(const char *filename,unsigned int window)
 {
 
@@ -409,18 +392,7 @@ void open_cb(Fl_Widget *,void *) {
 				cout<<"dims[0]="<<dims[0]<<"  "<<"dims[1]="<<dims[1]<<endl;
 				int i=0;
 				ofstream biimagpro2016("C:\\biimagpro2016.TXT",ios_base::trunc );
-				//for (int x = 0; x < dims[0]; x++)
-			 //{
-				// for(int y=0;y<dims[1];y++)
-			 //   {
-			 //   unsigned char* pixel = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
-			 //   //pixel[0] = x*10;
-				//if(pixel[0]>threshold1)bin->InsertTuple1(x+y*dims[0],255);
-				//else bin->InsertTuple1(x+y*dims[0],0);
-				//
-			 //   }
-				// //cout<<endl<<int(threshold1);
-			 //} 
+
 			 for (int x=0; x <dims[0]; x++)
 			 {
 				 for(int y=0;y<dims[1];y++)
@@ -446,10 +418,6 @@ void open_cb(Fl_Widget *,void *) {
 			 biimagpro2016.close();
 			 //=====================================================================
 
-
-
-
-			//==================================================================
 					  SliceWin[0]->activate();
 					  SliceWin[1]->activate();
 					  SliceWin[2]->activate();
@@ -581,44 +549,10 @@ void otsu_cb(Fl_Widget*, void*)
 	 int* H=static_cast<int*>(histogram->GetOutput()->GetScalarPointer(i,0,0));
      histo[i]=H[0];
 	 }
- //int totalpixel = grayimage->GetDimensions()[0] *grayimage->GetDimensions()[1];  
- // 
- //for(int i=0;i<256;i++)  
- //  { histo[i] =(float) histo[i]/(float)totalpixel;//归一化直方图  
- //cout<<""<<histo[i]<<endl;}
-
- //float maxavgvalue = 0;  
- // 
- //for(int i=0;i<256;i++)  
- // maxavgvalue = i*histo[i];//总的灰度均值，其实在这里可将其设为0  
- // 
- //float PA = 0;//A类出现概率  
- //float PB = 0;//B类出现概率  
- //float Agrayvalue = 0;//A类灰度均值  
- //float Bgrayvalue = 0;//B类灰度均值  
- //float maxvariance = 0;  
- //float variance ;  
- //int thre;  
- // 
- //for(int i=0;i<256;i++)  
- //  {  
- //       PA += histo[i];  
- //     PB = 1-PA;  
- //   Agrayvalue += i*histo[i];//A类灰度均值  
- //   Bgrayvalue += maxavgvalue - Agrayvalue;//B类灰度均值  
- //  
- //       variance = PA*(Agrayvalue-maxavgvalue)*(Agrayvalue-maxavgvalue)+PB*(Bgrayvalue-maxavgvalue)*(Bgrayvalue-maxavgvalue);//计算类间方差  
- // 
- // 
- //    if(variance>maxvariance)  
- //      {  
- //   maxvariance = variance;  
- //   thre = i;//求得最大类间方差时的像素值，即为最佳阈值  
- //       }  
- //  }  
  
-    int thresholdValue=1; // 阈值
-    //int ihist[256]; // 图像直方图，256个点
+ 
+    int thresholdValue=1; // 
+
     int  k; // various counters
     int n, n1, n2, gmin, gmax;
     double m1, m2, sum, csum, fmax, sb;
@@ -629,8 +563,8 @@ void otsu_cb(Fl_Widget*, void*)
     n = 0;
     for (k = 0; k <= 255; k++)
     {
-        sum += (double) k * (double) histo[k]; // x*f(x) 质量矩
-        n += histo[k]; //f(x) 质量
+        sum += (double) k * (double) histo[k]; // x*f(x) moment
+        n += histo[k]; //
     }
     if (!n)
     {
@@ -664,7 +598,7 @@ void otsu_cb(Fl_Widget*, void*)
 }
 
 
-// 计算当前位置的能量熵
+// entropy for the current location
 
 typedef enum {back,object} entropy_state;
 double caculateCurrentEntropy(float * Histogram1, int cur_threshold, entropy_state state)
@@ -691,7 +625,7 @@ for(int i = start; i < end; i++)
   //if((int)Histogram1[i]==0) continue;
 	if((int)Histogram1[i]!=0) {
   double percentage=Histogram1[i]/total;
-  cur_entropy+=-percentage * logf(percentage); // 能量的定义公式
+  cur_entropy+=-percentage * logf(percentage); // the definition of energy
  // cout<<cur_entropy;
 	}
 }
@@ -714,13 +648,13 @@ void maxent_cb(Fl_Widget*, void*)
  int totalpixel = grayimage->GetDimensions()[0] *grayimage->GetDimensions()[1];  
 
 
-// 寻找最大熵阈值并分割
+// searching for the max entropy and segmenting
 
 //CvHistogram * hist  = cvCreateHist(1, &HistogramBins, CV_HIST_ARRAY, HistogramRange);
 //    cvCalcHist(&src, hist);
 double maxentropy = -1.0;
 int max_index ;
-// 循环测试每个分割点，寻找到最大的阈值分割点
+// Cyclic testing
 for(int i = 0; i < 256; i++)
 {
   double cur_entropy = caculateCurrentEntropy(histo, i, object) + caculateCurrentEntropy(histo, i, back);
@@ -1038,9 +972,7 @@ void do_dilate(int* input,int* output,int mt[][3],int ox,int oy,int size)
 		}
 		cout<<endl<<"dil  done";
 		//delete [] a00;delete [] a01;delete [] a10;delete [] a11;
-		
-		
-		
+
 		//delete [] output;
 		delete [] in;
 		return;
@@ -1110,22 +1042,6 @@ void do_dilate(int* input,int* output,int mt[][3],int ox,int oy,int size)
 void m_dilation(Fl_Widget*, void*)
 {
 	if(!jpegReader)return;
-	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-	//binimage(threshold);
-	
-
- //for (int x=0; x <dims[0]; x++)
- //{
-	// for(int y=0;y<dims[1];y++)
- //   {
-	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
- //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-	//   imagematrix[i]=I[0];
-	//   i++;
- //   
-	//}
-	// //cout<<endl<<int(threshold1);
- //} 
 
 	mt[0][0]=atof(inpm0->value());
 	mt[0][1]=atof(inpm1->value());
@@ -1144,9 +1060,7 @@ void m_dilation(Fl_Widget*, void*)
 		ks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(ks/2.0);
 	int * ot =new int[(dims[0]+2*c)*(dims[1]+2*c)];
 	for(int i=0;i<dims[0]+2*c;i++)
@@ -1209,16 +1123,8 @@ for(int i=0;i<dims[0]+2*c;i++)
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -1272,11 +1178,7 @@ void do_erode(int* input,int* output,int mt[][3],int ox,int oy,int size)
 
 		}
 		cout<<endl<<"ero  done";
-		//delete [] a00;delete [] a01;delete [] a10;delete [] a11;
-		
-		
-		
-		//delete [] output;
+
 		delete [] in;
 		return;
 	}
@@ -1355,9 +1257,7 @@ void m_erosion(Fl_Widget*, void*)
 		ks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(ks/2.0);
 	int * ot =new int[(dims[0]+2*c)*(dims[1]+2*c)];
 	for(int i=0;i<dims[0]+2*c;i++)
@@ -1409,28 +1309,16 @@ void m_erosion(Fl_Widget*, void*)
 	for (int x = c; x < dims[0]+c; x++)
 	{
 		for(int y=c;y<dims[1]+c;y++)
-	{
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
+
 		        bin->InsertTuple1(x+y*(dims[0]),ot[y+x*(dims[1]+2*c)]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -1458,17 +1346,7 @@ void do_closing(int* input,int* output,int mt[][3],int ox,int oy,int size)
 
 	do_dilate(input,ot,mt,ox,oy, size);
 	int * ot1 =new int[(dims[0])*(dims[1])];
-	/*for(int i=0;i<dims[0]+2*c;i++)
-		{
 
-					for(int j=0;j<dims[1]+2*c;j++)
-					{
-						
-						if(ot1[i*(dims[1]+2*c)+j])ot1[i*(dims[1]+2*c)+j]=255;
-						
-					}
-
-		}*/
 	int i=0;
 	 for (int x=c; x <dims[0]+c; x++)
 			 {
@@ -1510,9 +1388,7 @@ void m_closing(Fl_Widget*, void*)
 		ks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(ks/2.0);
 	int * ot =new int[(dims[0]+2*c)*(dims[1]+2*c)];
 	for(int i=0;i<dims[0]+2*c;i++)
@@ -1565,28 +1441,16 @@ for(int i=0;i<dims[0]+2*c;i++)
 	for (int x = c; x < dims[0]+c; x++)
 	{
 		for(int y=c;y<dims[1]+c;y++)
-	   {
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+	   	{
+
 		        bin->InsertTuple1(x+y*(dims[0]),ot[y+x*(dims[1]+2*c)]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -1614,17 +1478,7 @@ void do_opening(int* input,int* output,int mt[][3],int ox,int oy,int size)
 
 	do_erode(input,ot,mt,ox,oy, size);
 	int * ot1 =new int[(dims[0])*(dims[1])];
-	/*for(int i=0;i<dims[0]+2*c;i++)
-		{
 
-					for(int j=0;j<dims[1]+2*c;j++)
-					{
-						
-						if(ot1[i*(dims[1]+2*c)+j])ot1[i*(dims[1]+2*c)+j]=255;
-						
-					}
-
-		}*/
 	int i=0;
 	 for (int x=c; x <dims[0]+c; x++)
 			 {
@@ -1667,9 +1521,7 @@ void m_opening(Fl_Widget*, void*)
 		ks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(ks/2.0);
 	int * ot =new int[(dims[0]+2*c)*(dims[1]+2*c)];
 	for(int i=0;i<dims[0]+2*c;i++)
@@ -1722,28 +1574,16 @@ void m_opening(Fl_Widget*, void*)
 	for (int x = c; x < dims[0]+c; x++)
 	{
 		for(int y=c;y<dims[1]+c;y++)
-	   {
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+	   	{
+
 		        bin->InsertTuple1(x+y*(dims[0]),ot[y+x*(dims[1]+2*c)]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -1822,7 +1662,6 @@ void m_distance(Fl_Widget*, void*)
 
 	if(!jpegReader)return;
 
-
 	mt[0][0]=atof(inpm0->value());
 	mt[0][1]=atof(inpm1->value());
 	mt[0][2]=atof(inpm2->value());
@@ -1883,33 +1722,19 @@ void m_distance(Fl_Widget*, void*)
 	for (int x = c; x < dims[0]+c; x++)
 	{
 		for(int y=c;y<dims[1]+c;y++)
-	   {
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+	   	{
+
 		        bin->InsertTuple1(x-c+(y-c)*(dims[0]),output[y+x*(dims[1]+2*c)]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] output;
-   
-  
- 
+
   SliceWin[3]->Render();
 }
 //=======================================================================================================================
@@ -1928,28 +1753,11 @@ void do_skeletonex(int* input,int* output,int mt[][3],int ox,int oy,int size)
 				||(input[x*(dims[1])+y]<input[(x+1)*(dims[1])+y-1])||(input[(x)*(dims[1])+y]<input[(x+1)*(dims[1])+y+1])
 				||(input[x*(dims[1])+y]<input[(x+1)*(dims[1])+y])||(input[(x)*(dims[1])+y]<input[(x+1)*(dims[1])+y])))
 				output[x*(dims[1]+2*c)+y]=input[x*(dims[1])+y];//cout<<I[0];
-			//if((input[x*(dims[1])+y]>input[x*(dims[1])+y-1])&&(input[x*(dims[1])+y]>=input[x*(dims[1])+y+1]))output[x*(dims[1]+2*c)+y]=input[x*(dims[1])+y];//cout<<I[0];
-			//if((input[x*(dims[1])+y]<=input[(x-1)*(dims[1])+y-1])&&(input[x*(dims[1])+y]<input[x*(dims[1])+y+1]))output[x*(dims[1]+2*c)+y]=input[x*(dims[1])+y];//cout<<I[0];
-			//if((input[x*(dims[1])+y]<input[x*(dims[1])+y-1])&&(input[x*(dims[1])+y]<=input[x*(dims[1])+y+1]))output[x*(dims[1]+2*c)+y]=input[x*(dims[1])+y];//cout<<I[0];
-			//if((input[x*(dims[1])+y]>input[(x-1)*(dims[1])+y])&&(input[x*(dims[1])+y]>input[(x+1)*(dims[1])+y]))output[x*(dims[1]+2*c)+y]=1;
-		
+
 		}
 				 
 	} 
-	//for (int y=c; y <dims[1]+c; y++)
-	//{
-	//	for(int x=c;x<dims[0]+c;x++)
-	//	{
-	//				
-	//		if((input[y*(dims[0])+x]>=input[y*(dims[0])+x-1])&&(input[y*(dims[0])+x]>input[y*(dims[0])+x+1]))output[y*(dims[0]+2*c)+x]=input[x*(dims[1])+y];//cout<<I[0];
-	//		if((input[y*(dims[0])+x]>input[y*(dims[0])+x-1])&&(input[y*(dims[0])+x]>=input[y*(dims[0])+x+1]))output[y*(dims[0]+2*c)+x]=input[x*(dims[1])+y];//cout<<I[0];
-	//		if((input[y*(dims[0])+x]<=input[y*(dims[0])+x-1])&&(input[y*(dims[0])+x]<input[y*(dims[0])+x+1]))output[y*(dims[0]+2*c)+x]=input[x*(dims[1])+y];//cout<<I[0];
-	//		if((input[y*(dims[0])+x]<input[y*(dims[0])+x-1])&&(input[y*(dims[0])+x]<=input[y*(dims[0])+x+1]))output[y*(dims[0]+2*c)+x]=input[x*(dims[1])+y];//cout<<I[0];
-	//		//if((input[x*(dims[1])+y]>input[(x-1)*(dims[1])+y])&&(input[x*(dims[1])+y]>input[(x+1)*(dims[1])+y]))output[x*(dims[1]+2*c)+y]=1;
-	//	
-	//	}
-	//			 
-	//} 
+
 }
 
 
@@ -1983,10 +1791,10 @@ void m_skeletonex(Fl_Widget*, void*)
 	for(int i=0;i<dims[0]+2*c;i++)
 		{
 
-					for(int j=0;j<dims[1]+2*c;j++)
-					{
-						output[i*(dims[1]+2*c)+j]=0;
-					}
+			for(int j=0;j<dims[1]+2*c;j++)
+			{
+				output[i*(dims[1]+2*c)+j]=0;
+			}
 
 		}
 	cout<<"to do"<<imagematrix<<":"<<output<<":"<<mt<<":"<<xx<<yy<<ks<<c;
@@ -2013,49 +1821,25 @@ void m_skeletonex(Fl_Widget*, void*)
 				 
 			 } 
 
-//for(int i=0;i<dims[0]+2*c;i++)
-//		{
-//
-//					for(int j=0;j<dims[1]+2*c;j++)
-//					{
-//						//cout<<ot[i*(dims[1]+2*c)+j];
-//						if(output[i*(dims[1]+2*c)+j])output[i*(dims[1]+2*c)+j]=255;
-//						
-//					}
-//
-//		}
-//=========================================================================
+
     int j=0;
 	bin->Initialize();
 	//bi=vtkFloatArray::New();
 	for (int x = c; x < dims[0]+c; x++)
 	{
 		for(int y=c;y<dims[1]+c;y++)
-	   {
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+	   	{
+
 		        bin->InsertTuple1(x-c+(y-c)*(dims[0]),output[y+x*(dims[1]+2*c)]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] output;
-   
   
  
   SliceWin[3]->Render();
@@ -2063,32 +1847,7 @@ void m_skeletonex(Fl_Widget*, void*)
 //=======================================================================================================================
 void do_skeletonre(int* input,int* output,int mt[][3],int ox,int oy,int size)
 {
-	//int c=ceil(size/2.0);
-	//
-	//for (int x=c; x <dims[0]+c; x++)
-	//{
-	//	for(int y=c;y<dims[1]+c;y++)
-	//	{
-	//				
-	//		if((input[x*(dims[1])+y]>=input[x*(dims[1])+y-1])&&(input[x*(dims[1])+y]>input[x*(dims[1])+y+1]))output[x*(dims[1]+2*c)+y]=input[x*(dims[1])+y];//cout<<I[0];
-	//		if((input[x*(dims[1])+y]>input[x*(dims[1])+y-1])&&(input[x*(dims[1])+y]>=input[x*(dims[1])+y+1]))output[x*(dims[1]+2*c)+y]=input[x*(dims[1])+y];//cout<<I[0];
-	//		//if((input[x*(dims[1])+y]>input[(x-1)*(dims[1])+y])&&(input[x*(dims[1])+y]>input[(x+1)*(dims[1])+y]))output[x*(dims[1]+2*c)+y]=1;
-	//	
-	//	}
-	//			 
-	//} 
-	//for (int y=c; y <dims[1]+c; y++)
-	//{
-	//	for(int x=c;x<dims[0]+c;x++)
-	//	{
-	//				
-	//		if((input[y*(dims[0])+x]>=input[y*(dims[0])+x-1])&&(input[y*(dims[0])+x]>input[y*(dims[0])+x+1]))output[y*(dims[0]+2*c)+x]=input[x*(dims[1])+y];//cout<<I[0];
-	//		if((input[y*(dims[0])+x]>input[y*(dims[0])+x-1])&&(input[y*(dims[0])+x]>=input[y*(dims[0])+x+1]))output[y*(dims[0]+2*c)+x]=input[x*(dims[1])+y];//cout<<I[0];
-	//		//if((input[x*(dims[1])+y]>input[(x-1)*(dims[1])+y])&&(input[x*(dims[1])+y]>input[(x+1)*(dims[1])+y]))output[x*(dims[1]+2*c)+y]=1;
-	//	
-	//	}
-	//			 
-	//} 
+
 	int maxi=1;
 	for(int i=0;i<dims[0];i++)
 		{
@@ -2266,33 +2025,19 @@ for(int i=0;i<dims[0]+2*c;i++)
 	for (int x = c; x < dims[0]+c; x++)
 	{
 		for(int y=c;y<dims[1]+c;y++)
-	   {
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
+
 		        bin->InsertTuple1(x-c+(y-c)*(dims[0]),output[y+x*(dims[1]+2*c)]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] output;
    
-  
- 
   SliceWin[3]->Render();
 
 }
@@ -2328,12 +2073,6 @@ void do_gdilate(int* input,int* output,int gt[][3],int ox,int oy,int size)
 
 					for(int j=0;j<dims[1];j++)
 					{
-						 /*a=gt[0][0]+in[(i+0-ox)*(dims[1]+1*2)+j+0-oy];
-						 b1=gt[0][1]+in[(i+0-ox)*(dims[1]+1*2)+j+1-oy];
-						 c1=gt[1][0]+in[(i+1-ox)*(dims[1]+1*2)+j+0-oy];
-						 d1=gt[1][1]+in[(i+1-ox)*(dims[1]+1*2)+j+1-oy];*/
-						//if()break;
-						
 
 
 						 if(((i+0-ox)<0)||((i+0-ox)>=(dims[0]))||((j+0-oy)<0)||((j+0-oy)>=(dims[1])))
@@ -2341,62 +2080,42 @@ void do_gdilate(int* input,int* output,int gt[][3],int ox,int oy,int size)
 							 a=gt[0][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            a=gt[0][0]+in[(i+0-ox)*(dims[1])+j+0-oy];
+                            				a=gt[0][0]+in[(i+0-ox)*(dims[1])+j+0-oy];
 						}
 						 if(((i+0-ox)<0)||((i+0-ox)>=(dims[0]))||((j+1-oy)<0)||((j+1-oy)>=(dims[1])))
 						{
 							 b1= gt[0][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            b1=gt[0][1]+in[(i+0-ox)*(dims[1])+j+1-oy];
+                            				b1=gt[0][1]+in[(i+0-ox)*(dims[1])+j+1-oy];
 						}
 						  if(((i+1-ox)<0)||((i+1-ox)>=(dims[0]))||((j+0-oy)<0)||((j+0-oy)>=(dims[1])))
 						{
 							 c1= gt[1][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            c1=gt[1][0]+in[(i+1-ox)*(dims[1])+j+0-oy];
+                            				c1=gt[1][0]+in[(i+1-ox)*(dims[1])+j+0-oy];
 						}
 						  if(((i+1-ox)<0)||((i+1-ox)>=(dims[0]))||((j+1-oy)<0)||((j+1-oy)>=(dims[1])))
 						{
 							 d1=gt[1][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            d1=gt[1][1]+in[(i+1-ox)*(dims[1])+j+1-oy];
+                            				d1=gt[1][1]+in[(i+1-ox)*(dims[1])+j+1-oy];
 						}
-					//	if(!((a==gt[0][0])&& (b1== gt[0][1])&&(c1== gt[1][0])&&(d1==gt[1][1])))
-					//	{
+
 							 if(a<b1)a=b1;
 							 if(a<c1)a=c1;
 							 if(a<d1)a=d1;
 							 if(a>255)a=255;
 							//output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=a;
 							 output[(i+0)*(dims[1])+j+0]=a;
-					//	}
-						/*if(in[i*(dims[1]+1*2)+j]>1)
-						{
-								if(mt[0][0])output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=in[i*(dims[1]+1*2)+j]-1;
-								if(mt[0][1])output[(i+0-ox)*(dims[1]+1*2)+j+1-oy]=in[i*(dims[1]+1*2)+j]-1;
-								if(mt[1][0])output[(i+1-ox)*(dims[1]+1*2)+j+0-oy]=in[i*(dims[1]+1*2)+j]-1;
-								if(mt[1][1])output[(i+1-ox)*(dims[1]+1*2)+j+1-oy]=in[i*(dims[1]+1*2)+j]-1;
-								
-						}
-						else if(in[i*(dims[1]+1*2)+j]==1)
-						{
-							    if(mt[0][0])output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=1;
-								if(mt[0][1])output[(i+0-ox)*(dims[1]+1*2)+j+1-oy]=1;
-								if(mt[1][0])output[(i+1-ox)*(dims[1]+1*2)+j+0-oy]=1;
-								if(mt[1][1])output[(i+1-ox)*(dims[1]+1*2)+j+1-oy]=1;
-						}*/
+
 					}
 
 		}
 		cout<<endl<<"dil  done";
-		//delete [] a00;delete [] a01;delete [] a10;delete [] a11;
-		
-		
-		
-		//delete [] output;
+
 		delete [] in;
 		return;
 	}
@@ -2426,21 +2145,13 @@ void do_gdilate(int* input,int* output,int gt[][3],int ox,int oy,int size)
 
 					for(int j=0;j<dims[1];j++)
 					{
-						 /*a= gt[0][0]+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
-						 b1=gt[0][1]+in[(i+0-ox)*(dims[1]+2*2)+j+1-oy];
-						 c1=gt[0][2]+in[(i+0-ox)*(dims[1]+2*2)+j+2-oy];
-						 d1=gt[1][0]+in[(i+1-ox)*(dims[1]+2*2)+j+0-oy];
-						 e1=gt[1][1]+in[(i+1-ox)*(dims[1]+2*2)+j+1-oy];
-						 f1=gt[1][2]+in[(i+1-ox)*(dims[1]+2*2)+j+2-oy];
-						 g1=gt[2][0]+in[(i+2-ox)*(dims[1]+2*2)+j+0-oy];
-						 h1=gt[2][1]+in[(i+2-ox)*(dims[1]+2*2)+j+1-oy];
-						 i1=gt[2][2]+in[(i+2-ox)*(dims[1]+2*2)+j+2-oy];*/
+
 						 if(((i+0-ox)<0)||((i+0-ox)>=(dims[0]))||((j+0-oy)<0)||((j+0-oy)>=(dims[1])))
 						{
 							 a=gt[0][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                             a= gt[0][0]+in[(i+0-ox)*(dims[1])+j+0-oy];
+                             				 a= gt[0][0]+in[(i+0-ox)*(dims[1])+j+0-oy];
 						}
 						// for(int j=0;j<dims[1]+2*2;j++)
 					
@@ -2449,56 +2160,56 @@ void do_gdilate(int* input,int* output,int gt[][3],int ox,int oy,int size)
 							 b1=gt[0][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                             b1=gt[0][1]+in[(i+0-ox)*(dims[1])+j+1-oy];
+                             				b1=gt[0][1]+in[(i+0-ox)*(dims[1])+j+1-oy];
 						}
 						 if(((i+0-ox)<0)||((i+0-ox)>=(dims[0]))||((j+2-oy)<0)||((j+2-oy)>=(dims[1])))
 						{
 							 c1= gt[0][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            c1=gt[0][2]+in[(i+0-ox)*(dims[1])+j+2-oy];
+                            				c1=gt[0][2]+in[(i+0-ox)*(dims[1])+j+2-oy];
 						}
 						 if(((i+1-ox)<0)||((i+1-ox)>=(dims[0]))||((j+0-oy)<0)||((j+0-oy)>=(dims[1])))
 						{
 							 d1=gt[1][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            d1=gt[1][0]+in[(i+1-ox)*(dims[1])+j+0-oy];
+                            				d1=gt[1][0]+in[(i+1-ox)*(dims[1])+j+0-oy];
 						}
 						 if(((i+1-ox)<0)||((i+1-ox)>=(dims[0]))||((j+1-oy)<0)||((j+1-oy)>=(dims[1])))
 						{
 							 e1=gt[1][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            e1=gt[1][1]+in[(i+1-ox)*(dims[1])+j+1-oy];
+                            				e1=gt[1][1]+in[(i+1-ox)*(dims[1])+j+1-oy];
 						}
 						 if(((i+1-ox)<0)||((i+1-ox)>=(dims[0]))||((j+2-oy)<0)||((j+2-oy)>=(dims[1])))
 						{
 							 f1= gt[1][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            f1=gt[1][2]+in[(i+1-ox)*(dims[1])+j+2-oy];
+                            				f1=gt[1][2]+in[(i+1-ox)*(dims[1])+j+2-oy];
 						}
 						 if(((i+2-ox)<0)||((i+2-ox)>=(dims[0]))||((j+0-oy)<0)||((j+0-oy)>=(dims[1])))
 						{
 							 g1=gt[2][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            g1=gt[2][0]+in[(i+2-ox)*(dims[1])+j+0-oy];
+                            				g1=gt[2][0]+in[(i+2-ox)*(dims[1])+j+0-oy];
 						}
 						 if(((i+2-ox)<0)||((i+2-ox)>=(dims[0]))||((j+1-oy)<0)||((j+1-oy)>=(dims[1])))
 						{
 							 h1=gt[2][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            h1=gt[2][1]+in[(i+2-ox)*(dims[1])+j+1-oy];
+                            				h1=gt[2][1]+in[(i+2-ox)*(dims[1])+j+1-oy];
 						}
 						 if(((i+2-ox)<0)||((i+2-ox)>=(dims[0]))||((j+2-oy)<0)||((j+2-oy)>=(dims[1])))
 						{
 							 i1= gt[2][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            i1=gt[2][2]+in[(i+2-ox)*(dims[1])+j+2-oy];
+                            				i1=gt[2][2]+in[(i+2-ox)*(dims[1])+j+2-oy];
 						}
 						 if(!((a==gt[0][0])&& (b1== gt[0][1])&&(c1== gt[0][2])&&(d1==gt[1][0])&&(e1==gt[1][1])&& (f1== gt[1][2])&&(g1== gt[2][0])&&(h1==gt[2][1])&&(i1==gt[2][2])))
 						 {
@@ -2514,31 +2225,7 @@ void do_gdilate(int* input,int* output,int gt[][3],int ox,int oy,int size)
 							//output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=a;
 							 output[(i+0)*(dims[1])+j+0]=a;
 						 }
-						/*if(in[i*(dims[1]+2*2)+j]>1)
-						{
-								if(mt[0][0])output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[0][1])output[(i+0-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[0][2])output[(i+0-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[1][0])output[(i+1-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[1][1])output[(i+1-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[1][2])output[(i+1-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[2][0])output[(i+2-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[2][1])output[(i+2-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[2][2])output[(i+2-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-								
-						}
-						else if(in[i*(dims[1]+2*2)+j]==1)
-						{
-							    if(mt[0][0])output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=1;
-								if(mt[0][1])output[(i+0-ox)*(dims[1]+2*2)+j+1-oy]=1;
-								if(mt[0][2])output[(i+0-ox)*(dims[1]+2*2)+j+2-oy]=1;
-								if(mt[1][0])output[(i+1-ox)*(dims[1]+2*2)+j+0-oy]=1;
-								if(mt[1][1])output[(i+1-ox)*(dims[1]+2*2)+j+1-oy]=1;
-								if(mt[1][2])output[(i+1-ox)*(dims[1]+2*2)+j+2-oy]=1;
-								if(mt[2][0])output[(i+2-ox)*(dims[1]+2*2)+j+0-oy]=1;
-								if(mt[2][1])output[(i+2-ox)*(dims[1]+2*2)+j+1-oy]=1;
-								if(mt[2][2])output[(i+2-ox)*(dims[1]+2*2)+j+2-oy]=1;
-						}*/
+						
 					}
 
 		}
@@ -2553,22 +2240,6 @@ void g_dilation(Fl_Widget*, void*)
 {
 	
 	if(!jpegReader)return;
-	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-	//binimage(threshold);
-	
-
- //for (int x=0; x <dims[0]; x++)
- //{
-	// for(int y=0;y<dims[1];y++)
- //   {
-	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
- //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-	//   imagematrix[i]=I[0];
-	//   i++;
- //   
-	//}
-	// //cout<<endl<<int(threshold1);
- //} 
 
 	gt[0][0]=atof(inpg0->value());
 	gt[0][1]=atof(inpg1->value());
@@ -2587,9 +2258,7 @@ void g_dilation(Fl_Widget*, void*)
 		gks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(gks/2.0);
 	int * ot =new int[(dims[0])*(dims[1])];
 	for(int i=0;i<dims[0];i++)
@@ -2631,25 +2300,16 @@ void g_dilation(Fl_Widget*, void*)
 	for (int x = 0; x < dims[0]; x++)
 	{
 		for(int y=0;y<dims[1];y++)
-	{
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
+
 		        bin->InsertTuple1(x+(y)*(dims[0]),ot[y+x*(dims[1])]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
 
 	delete [] ot;
  
@@ -2670,11 +2330,9 @@ void g_reset(Fl_Widget*, void*)
 					unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
 
 					gimagematrix[i]=I[0];
-
-				
+			
 					
 				   i++;
-				   
     
 				}
 				
@@ -2753,30 +2411,11 @@ void do_gerode(int* input,int* output,int gt[][3],int ox,int oy,int size)
 							 output[(i+0)*(dims[1])+j+0]=a;
 						}
 
-						/*if(in[i*(dims[1]+1*2)+j]>1)
-						{
-								if(mt[0][0])output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=in[i*(dims[1]+1*2)+j]-1;
-								if(mt[0][1])output[(i+0-ox)*(dims[1]+1*2)+j+1-oy]=in[i*(dims[1]+1*2)+j]-1;
-								if(mt[1][0])output[(i+1-ox)*(dims[1]+1*2)+j+0-oy]=in[i*(dims[1]+1*2)+j]-1;
-								if(mt[1][1])output[(i+1-ox)*(dims[1]+1*2)+j+1-oy]=in[i*(dims[1]+1*2)+j]-1;
-								
-						}
-						else if(in[i*(dims[1]+1*2)+j]==1)
-						{
-							    if(mt[0][0])output[(i+0-ox)*(dims[1]+1*2)+j+0-oy]=1;
-								if(mt[0][1])output[(i+0-ox)*(dims[1]+1*2)+j+1-oy]=1;
-								if(mt[1][0])output[(i+1-ox)*(dims[1]+1*2)+j+0-oy]=1;
-								if(mt[1][1])output[(i+1-ox)*(dims[1]+1*2)+j+1-oy]=1;
-						}*/
 					}
 
 		}
 		cout<<endl<<"dil  done";
-		//delete [] a00;delete [] a01;delete [] a10;delete [] a11;
-		
-		
-		
-		//delete [] output;
+
 		delete [] in;
 		return;
 	}
@@ -2812,7 +2451,7 @@ void do_gerode(int* input,int* output,int gt[][3],int ox,int oy,int size)
 							 a= -gt[0][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                             a= -gt[0][0]+in[(i+0-ox)*(dims[1])+j+0-oy];
+                             				a= -gt[0][0]+in[(i+0-ox)*(dims[1])+j+0-oy];
 						};
 						 
 					
@@ -2821,56 +2460,56 @@ void do_gerode(int* input,int* output,int gt[][3],int ox,int oy,int size)
 							 b1= -gt[0][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                             b1=-gt[0][1]+in[(i+0-ox)*(dims[1])+j+1-oy];
+                             				b1=-gt[0][1]+in[(i+0-ox)*(dims[1])+j+1-oy];
 						};
 						 if(((i+0-ox)<0)||((i+0-ox)>=(dims[0]))||((j+2-oy)<0)||((j+2-oy)>=(dims[1])))
 						{
 							 c1= -gt[0][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            c1=-gt[0][2]+in[(i+0-ox)*(dims[1])+j+2-oy];
+                            				c1=-gt[0][2]+in[(i+0-ox)*(dims[1])+j+2-oy];
 						};
 						 if(((i+1-ox)<0)||((i+1-ox)>=(dims[0]))||((j+0-oy)<0)||((j+0-oy)>=(dims[1])))
 						{
 							 d1= -gt[1][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            d1=-gt[1][0]+in[(i+1-ox)*(dims[1])+j+0-oy];
+                            				d1=-gt[1][0]+in[(i+1-ox)*(dims[1])+j+0-oy];
 						};
 						 if(((i+1-ox)<0)||((i+1-ox)>=(dims[0]))||((j+1-oy)<0)||((j+1-oy)>=(dims[1])))
 						{
 							 e1=-gt[1][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            e1=-gt[1][1]+in[(i+1-ox)*(dims[1])+j+1-oy];
+                            				e1=-gt[1][1]+in[(i+1-ox)*(dims[1])+j+1-oy];
 						};
 						 if(((i+1-ox)<0)||((i+1-ox)>=(dims[0]))||((j+2-oy)<0)||((j+2-oy)>=(dims[1])))
 						{
 							 f1=-gt[1][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            f1=-gt[1][2]+in[(i+1-ox)*(dims[1])+j+2-oy];
+                            				f1=-gt[1][2]+in[(i+1-ox)*(dims[1])+j+2-oy];
 						};
 						 if(((i+2-ox)<0)||((i+2-ox)>=(dims[0]))||((j+0-oy)<0)||((j+0-oy)>=(dims[1])))
 						{
 							 g1= -gt[2][0];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            g1=-gt[2][0]+in[(i+2-ox)*(dims[1])+j+0-oy];
+                            				g1=-gt[2][0]+in[(i+2-ox)*(dims[1])+j+0-oy];
 						};
 						 if(((i+2-ox)<0)||((i+2-ox)>=(dims[0]))||((j+1-oy)<0)||((j+1-oy)>=(dims[1])))
 						{
 							 h1= -gt[2][1];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            h1=-gt[2][1]+in[(i+2-ox)*(dims[1])+j+1-oy];
+                            				h1=-gt[2][1]+in[(i+2-ox)*(dims[1])+j+1-oy];
 						};
 						 if(((i+2-ox)<0)||((i+2-ox)>=(dims[0]))||((j+2-oy)<0)||((j+2-oy)>=(dims[1])))
 						{
 							 i1=-gt[2][2];//-gt[0][0];//+in[(i+0-ox)*(dims[1]+2*2)+j+0-oy];
 						}else
 						{
-                            i1=-gt[2][2]+in[(i+2-ox)*(dims[1])+j+2-oy];
+                            				i1=-gt[2][2]+in[(i+2-ox)*(dims[1])+j+2-oy];
 						};
 						if(!((a==-gt[0][0])&& (b1== -gt[0][1])&&(c1== -gt[0][2])&&(d1==-gt[1][0])&&(e1==-gt[1][1])&& (f1== -gt[1][2])&&(g1== -gt[2][0])&&(h1==-gt[2][1])&&(i1==-gt[2][2])))
 						 { 
@@ -2886,31 +2525,7 @@ void do_gerode(int* input,int* output,int gt[][3],int ox,int oy,int size)
 							//output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=a;
 							 output[(i+0)*(dims[1])+j+0]=a;
 						}
-						/*if(in[i*(dims[1]+2*2)+j]>1)
-						{
-								if(mt[0][0])output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[0][1])output[(i+0-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[0][2])output[(i+0-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[1][0])output[(i+1-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[1][1])output[(i+1-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[1][2])output[(i+1-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[2][0])output[(i+2-ox)*(dims[1]+2*2)+j+0-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[2][1])output[(i+2-ox)*(dims[1]+2*2)+j+1-oy]=in[i*(dims[1]+2*2)+j]-1;
-								if(mt[2][2])output[(i+2-ox)*(dims[1]+2*2)+j+2-oy]=in[i*(dims[1]+2*2)+j]-1;
-								
-						}
-						else if(in[i*(dims[1]+2*2)+j]==1)
-						{
-							    if(mt[0][0])output[(i+0-ox)*(dims[1]+2*2)+j+0-oy]=1;
-								if(mt[0][1])output[(i+0-ox)*(dims[1]+2*2)+j+1-oy]=1;
-								if(mt[0][2])output[(i+0-ox)*(dims[1]+2*2)+j+2-oy]=1;
-								if(mt[1][0])output[(i+1-ox)*(dims[1]+2*2)+j+0-oy]=1;
-								if(mt[1][1])output[(i+1-ox)*(dims[1]+2*2)+j+1-oy]=1;
-								if(mt[1][2])output[(i+1-ox)*(dims[1]+2*2)+j+2-oy]=1;
-								if(mt[2][0])output[(i+2-ox)*(dims[1]+2*2)+j+0-oy]=1;
-								if(mt[2][1])output[(i+2-ox)*(dims[1]+2*2)+j+1-oy]=1;
-								if(mt[2][2])output[(i+2-ox)*(dims[1]+2*2)+j+2-oy]=1;
-						}*/
+						
 					}
 
 		}
@@ -2925,22 +2540,7 @@ void g_erosion(Fl_Widget*, void*)
 {
 	
 	if(!jpegReader)return;
-	//vtkSmartPointer<vtkFloatArray> bi=vtkFloatArray::New();
-	//binimage(threshold);
-	
 
- //for (int x=0; x <dims[0]; x++)
- //{
-	// for(int y=0;y<dims[1];y++)
- //   {
-	//	unsigned char* I = static_cast<unsigned char*>(grayimage->GetScalarPointer(x,y,0));
- //     // int*I=static_cast<int*>(grayimage->GetScalarPointer(x,y,0));
-	//   imagematrix[i]=I[0];
-	//   i++;
- //   
-	//}
-	// //cout<<endl<<int(threshold1);
- //} 
 
 	gt[0][0]=atof(inpg0->value());
 	gt[0][1]=atof(inpg1->value());
@@ -2959,9 +2559,7 @@ void g_erosion(Fl_Widget*, void*)
 		gks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(gks/2.0);
 	int * ot =new int[(dims[0])*(dims[1])];
 	for(int i=0;i<dims[0];i++)
@@ -3002,28 +2600,16 @@ void g_erosion(Fl_Widget*, void*)
 	for (int x = 0; x < dims[0]; x++)
 	{
 		for(int y=0;y<dims[1];y++)
-	{
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
+
 		        bin->InsertTuple1(x+(y)*(dims[0]),ot[y+x*(dims[1])]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -3043,8 +2629,7 @@ void do_gclosing(int* input,int* output,int mt[][3],int ox,int oy,int size)
 
 					for(int j=0;j<dims[1];j++)
 					{
-						//cout<<ot[i*(dims[1]+2*c)+j];
-						//if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
+
 						ot[i*(dims[1])+j]=0;
 						
 					}
@@ -3053,17 +2638,7 @@ void do_gclosing(int* input,int* output,int mt[][3],int ox,int oy,int size)
 
 	do_gdilate(input,ot,mt,ox,oy, size);
 	int * ot1 =new int[(dims[0])*(dims[1])];
-	/*for(int i=0;i<dims[0]+2*c;i++)
-		{
 
-					for(int j=0;j<dims[1]+2*c;j++)
-					{
-						
-						if(ot1[i*(dims[1]+2*c)+j])ot1[i*(dims[1]+2*c)+j]=255;
-						
-					}
-
-		}*/
 	int i=0;
 	 for (int x=0; x <dims[0]; x++)
 			 {
@@ -3147,28 +2722,16 @@ void g_closing(Fl_Widget*, void*)
 	for (int x = 0; x < dims[0]; x++)
 	{
 		for(int y=0;y<dims[1];y++)
-	{
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
+
 		        bin->InsertTuple1(x+(y)*(dims[0]),ot[y+x*(dims[1])]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -3187,8 +2750,7 @@ void do_gopening(int* input,int* output,int mt[][3],int ox,int oy,int size)
 
 					for(int j=0;j<dims[1];j++)
 					{
-						//cout<<ot[i*(dims[1]+2*c)+j];
-						//if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
+
 						ot[i*(dims[1])+j]=0;
 						
 					}
@@ -3197,17 +2759,7 @@ void do_gopening(int* input,int* output,int mt[][3],int ox,int oy,int size)
 
 	do_gerode(input,ot,mt,ox,oy, size);
 	int * ot1 =new int[(dims[0])*(dims[1])];
-	/*for(int i=0;i<dims[0]+2*c;i++)
-		{
 
-					for(int j=0;j<dims[1]+2*c;j++)
-					{
-						
-						if(ot1[i*(dims[1]+2*c)+j])ot1[i*(dims[1]+2*c)+j]=255;
-						
-					}
-
-		}*/
 	int i=0;
 	 for (int x=0; x <dims[0]; x++)
 			 {
@@ -3253,9 +2805,7 @@ void g_opening(Fl_Widget*, void*)
 		gks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(gks/2.0);
 	int * ot =new int[(dims[0])*(dims[1])];
 	for(int i=0;i<dims[0];i++)
@@ -3297,28 +2847,16 @@ void g_opening(Fl_Widget*, void*)
 	for (int x = 0; x < dims[0]; x++)
 	{
 		for(int y=0;y<dims[1];y++)
-	{
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
+
 		        bin->InsertTuple1(x+(y)*(dims[0]),ot[y+x*(dims[1])]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -3337,8 +2875,7 @@ void do_edgedetect(int* input,int* output,int mt[][3],int ox,int oy,int size)
 
 					for(int j=0;j<dims[1]+2*c;j++)
 					{
-						//cout<<ot[i*(dims[1]+2*c)+j];
-						//if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
+
 						ot[i*(dims[1]+2*c)+j]=0;
 						
 					}
@@ -3352,8 +2889,7 @@ void do_edgedetect(int* input,int* output,int mt[][3],int ox,int oy,int size)
 
 					for(int j=0;j<dims[1]+2*c;j++)
 					{
-						//cout<<ot[i*(dims[1]+2*c)+j];
-						//if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
+
 						ot1[i*(dims[1]+2*c)+j]=0;
 						
 					}
@@ -3405,9 +2941,7 @@ void m_edgedetection(Fl_Widget*, void*)
 		ks=3;
 		
 	}
-	//{
-	//	int * output=new int[(dims[0]+2)*(dims[1]+2)];
-	//}
+
 	int c=ceil(ks/2.0);
 	int * ot =new int[(dims[0]+2*c)*(dims[1]+2*c)];
 	for(int i=0;i<dims[0]+2*c;i++)
@@ -3458,28 +2992,16 @@ for(int i=0;i<dims[0]+2*c;i++)
 	for (int x = c; x < dims[0]+c; x++)
 	{
 		for(int y=c;y<dims[1]+c;y++)
-	{
-		
-				////unsigned char* pixel = static_cast<unsigned char*>(binaryimage->GetScalarPointer(x,y,0));
-				//pixel[0] = x*10;
-				////if(pixel[0]>threshold1)bi->InsertTuple1(x+y*dims[0],255);
-				//bin->InsertTuple1(x+y*(dims[0]+c),ot[j]);
+		{
+
 		        bin->InsertTuple1(x-c+(y-c)*(dims[0]),ot[y+x*(dims[1]+2*c)]);
 			    j++;
 		}
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -3503,8 +3025,7 @@ void do_morphogradient(int* input,int* output,int mt[][3],int ox,int oy,int size
 
 					for(int j=0;j<dims[1];j++)
 					{
-						//cout<<ot[i*(dims[1]+2*c)+j];
-						//if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
+
 						ot[i*(dims[1])+j]=0;
 						
 					}
@@ -3518,8 +3039,7 @@ void do_morphogradient(int* input,int* output,int mt[][3],int ox,int oy,int size
 
 					for(int j=0;j<dims[1];j++)
 					{
-						//cout<<ot[i*(dims[1]+2*c)+j];
-						//if(ot[i*(dims[1]+2*c)+j])ot[i*(dims[1]+2*c)+j]=255;
+
 						ot1[i*(dims[1])+j]=0;
 						
 					}
@@ -3618,16 +3138,8 @@ void m_morphogradient(Fl_Widget*, void*)
 
 	
 	}
-		//cout<<endl<<int(threshold1);
-	//int d33[3]={dims[0]+c,dims[1]+c,dims[2]};
-	//binaryimage->SetDimensions(d33);
+
 	binaryimage->GetPointData()->SetScalars(bin);
-  
- 
-	//binmap->Update();
-  
-    
- 
 
 	delete [] ot;
    
@@ -3923,19 +3435,19 @@ void do_grayscalerecon(int* input,int* mask,int* output,int gt[][3],int ox,int o
 	}
 	int i=0;
 	 for (int x=0; x <dims[0]; x++)
-					 {
-						 for(int y=0;y<dims[1];y++)
-						{
+	 {
+		 for(int y=0;y<dims[1];y++)
+		{
 
-							output[x*(dims[1])+y]=ot[x*(dims[1])+y];
+			output[x*(dims[1])+y]=ot[x*(dims[1])+y];
 
-					   
-						   i++;
-				   
-    
-						}
-				 
-					 } 
+
+		   i++;
+
+
+		}
+
+	 } 
 
 	delete [] ot;
 
@@ -4619,22 +4131,18 @@ UserInterfaceGUI::~UserInterfaceGUI()
 
 void UserInterfaceGUI::Show()
 {
-	 SliceWin[0]->show();
-	 SliceWin[2]->show();
+	SliceWin[0]->show();
+	SliceWin[2]->show();
 	//pViewHandling->Init();
-	 vtkSmartPointer<vtkInteractorStyleImage> style0 =
-    vtkSmartPointer<vtkInteractorStyleImage>::New(); 
-  SliceWin[0]->SetInteractorStyle(style0);
-  vtkSmartPointer<vtkInteractorStyleImage> style1 =
-    vtkSmartPointer<vtkInteractorStyleImage>::New(); 
-  SliceWin[1]->SetInteractorStyle(style1);
-vtkSmartPointer<vtkInteractorStyleImage> style2 =
-    vtkSmartPointer<vtkInteractorStyleImage>::New(); 
-  SliceWin[2]->SetInteractorStyle(style2);
-  //vtkSmartPointer<vtkInteractorStyleImage> style3 =
-  //  vtkSmartPointer<vtkInteractorStyleImage>::New(); 
- // SliceWin[3]->SetInteractorStyle(style3);
-
+	vtkSmartPointer<vtkInteractorStyleImage> style0 =
+    	vtkSmartPointer<vtkInteractorStyleImage>::New(); 
+  	SliceWin[0]->SetInteractorStyle(style0);
+  	vtkSmartPointer<vtkInteractorStyleImage> style1 =
+    	vtkSmartPointer<vtkInteractorStyleImage>::New(); 
+  	SliceWin[1]->SetInteractorStyle(style1);
+	vtkSmartPointer<vtkInteractorStyleImage> style2 =
+    	vtkSmartPointer<vtkInteractorStyleImage>::New(); 
+  	SliceWin[2]->SetInteractorStyle(style2);
  
 
 	SliceWin[0]->Initialize();
@@ -4650,7 +4158,6 @@ vtkSmartPointer<vtkInteractorStyleImage> style2 =
 	//SliceSlider[0]->deactivate();
 	SliceSlider->deactivate();
 	//SliceSlider[2]->deactivate();
-
 	
 	//ivalue->deactivate();
 
