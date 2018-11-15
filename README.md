@@ -1,5 +1,5 @@
 # IMGPro2016
-This repository contains the original code for an image processing software based on VTK and FLTK libraries. It is used to display some classic image processing algorithms on image filtering, segmentation and edge detection.
+This repository contains the original code for an image processing software based on VTK and FLTK libraries. It is used to display some classic image processing algorithms on morphological filtering, image segmentation and edge detection.
 
 ![IMGProGUI](IMGProGUI.png)
 
